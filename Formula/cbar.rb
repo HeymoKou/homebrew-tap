@@ -1,8 +1,8 @@
 class Cbar < Formula
   desc "Native macOS menu-bar monitor for Claude account usage"
   homepage "https://github.com/HeymoKou/cbar"
-  url "https://github.com/HeymoKou/cbar/archive/refs/tags/v0.1.0.tar.gz"
-  sha256 "56a2e1743aebc456892f56c35efd3528c92c731ce337c5a8406bfaa7e0b996fc"
+  url "https://github.com/HeymoKou/cbar/archive/refs/tags/v0.2.0.tar.gz"
+  sha256 "b2e4c52df9e158ffe0937c731e1d9ec26139fede821d88a3f807f5b310f036c0"
   license "MIT"
 
   depends_on :macos
@@ -23,7 +23,7 @@ class Cbar < Formula
         <key>CFBundleIdentifier</key><string>com.heymo.cbar</string>
         <key>CFBundleExecutable</key><string>Cbar</string>
         <key>CFBundlePackageType</key><string>APPL</string>
-        <key>CFBundleShortVersionString</key><string>0.1.0</string>
+        <key>CFBundleShortVersionString</key><string>0.2.0</string>
         <key>CFBundleVersion</key><string>1</string>
         <key>LSUIElement</key><true/>
         <key>LSMinimumSystemVersion</key><string>14.0</string>
