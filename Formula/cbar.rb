@@ -1,35 +1,19 @@
 class Cbar < Formula
   desc "Native macOS menu-bar monitor for Claude account usage"
   homepage "https://github.com/HeymoKou/cbar"
-  url "https://github.com/HeymoKou/cbar/archive/refs/tags/v0.2.0.tar.gz"
-  sha256 "b2e4c52df9e158ffe0937c731e1d9ec26139fede821d88a3f807f5b310f036c0"
+  url "https://github.com/HeymoKou/cbar/archive/refs/tags/v0.2.6.tar.gz"
+  sha256 "d89204efc65869549cf4d89f19c194eab40cdc5d3a6a98733e7fbc9b43070e24"
   license "MIT"
 
   depends_on :macos
 
   def install
-    system "swift", "build", "-c", "release", "--disable-sandbox"
-
-    app = libexec/"Cbar.app"
-    (app/"Contents/MacOS").mkpath
-    cp ".build/release/Cbar", app/"Contents/MacOS/Cbar"
-    (app/"Contents/Info.plist").write <<~PLIST
-      <?xml version="1.0" encoding="UTF-8"?>
-      <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-      <plist version="1.0">
-      <dict>
-        <key>CFBundleName</key><string>Cbar</string>
-        <key>CFBundleDisplayName</key><string>cbar</string>
-        <key>CFBundleIdentifier</key><string>com.heymo.cbar</string>
-        <key>CFBundleExecutable</key><string>Cbar</string>
-        <key>CFBundlePackageType</key><string>APPL</string>
-        <key>CFBundleShortVersionString</key><string>0.2.0</string>
-        <key>CFBundleVersion</key><string>1</string>
-        <key>LSUIElement</key><true/>
-        <key>LSMinimumSystemVersion</key><string>14.0</string>
-      </dict>
-      </plist>
-    PLIST
+    # build.sh is the one place that builds the bundle and writes its version, so
+    # the formula runs it rather than keeping a second copy of the plist here —
+    # that copy is why brew shipped an app stamped 0.2.0 from a 0.2.5 tag.
+    # --disable-sandbox because SwiftPM's sandbox cannot run inside Homebrew's.
+    system "./build.sh", "--disable-sandbox"
+    libexec.install "Cbar.app"
   end
 
   service do
@@ -40,6 +24,8 @@ class Cbar < Formula
   end
 
   test do
-    system "swift", "--version"
+    plist = libexec/"Cbar.app/Contents/Info.plist"
+    stamped = shell_output("/usr/libexec/PlistBuddy -c 'Print CFBundleShortVersionString' #{plist}").strip
+    assert_equal version.to_s, stamped
   end
 end
