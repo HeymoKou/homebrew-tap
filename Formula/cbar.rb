@@ -1,8 +1,8 @@
 class Cbar < Formula
-  desc "Native macOS menu-bar monitor for Claude account usage"
+  desc "Native macOS menu-bar monitor for Claude and Codex account usage"
   homepage "https://github.com/HeymoKou/cbar"
-  url "https://github.com/HeymoKou/cbar/archive/refs/tags/v0.2.12.tar.gz"
-  sha256 "5a3efab6633c985a3033bd5cf321830f4cf1f357728946ba33e86b17ae31efa1"
+  url "https://github.com/HeymoKou/cbar/archive/refs/tags/v0.2.13.tar.gz"
+  sha256 "1586cb45c8c15999dc819ec32593eb0c6f7d7206ed495f0a63568f0f736ed859"
   license "MIT"
 
   depends_on :macos
