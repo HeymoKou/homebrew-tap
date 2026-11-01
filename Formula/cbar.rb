@@ -1,8 +1,8 @@
 class Cbar < Formula
   desc "Native macOS menu-bar monitor for Claude, Codex, Grok, and Antigravity usage"
   homepage "https://github.com/HeymoKou/cbar"
-  url "https://github.com/HeymoKou/cbar/archive/refs/tags/v0.2.20.tar.gz"
-  sha256 "9de6b0b95ba08460b0b8b9fdb3d9232ded737cfef9c08d203e36d09d8d733652"
+  url "https://github.com/HeymoKou/cbar/archive/refs/tags/v0.2.21.tar.gz"
+  sha256 "3458653dc4da8cf32ebf6c3532184b760ffb2fc426253563acbd0db583698ba1"
   license "MIT"
 
   depends_on :macos
