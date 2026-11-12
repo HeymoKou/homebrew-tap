@@ -66,3 +66,10 @@ jobs:
         uses: Homebrew/actions/git-try-push@c262868c096d909fc278daa87ed9772967331ea3 # 2026.11.02.1
         with:
           branch: main
+
+      # The bottle commit above is pushed with GITHUB_TOKEN, which starts no
+      # workflow — so the push check in tests.yml never sees it. Fetch the
+      # bottle here instead: the last step proves what users will pour.
+      - name: Bottle on main can be fetched
+        # --bottle-tag: this job runs on Linux and the bottle is macOS-only.
+        run: brew fetch --force-bottle --bottle-tag=arm64_sequoia --formula heymokou/tap/cbar
