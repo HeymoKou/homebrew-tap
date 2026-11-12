@@ -6,8 +6,8 @@ class Cbar < Formula
   license "MIT"
 
   bottle do
-    root_url "https://github.com/HeymoKou/homebrew-tap/releases/download/cbar-0.2.23"
-    sha256 cellar: :any_skip_relocation, arm64_sequoia: "1352952145205e0d68a17feb323a2919f800b9fb2f49d638d1fccc221d51e4df"
+    root_url "https://github.com/HeymoKou/homebrew-tap/releases/download/cbar-0.2.24"
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "b59b145953b96aabb82aab6f5f1d92ee8398580fdb6d42353172cca20f248317"
   end
 
   depends_on :macos
