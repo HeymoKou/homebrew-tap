@@ -1,0 +1,43 @@
+# Runs publish.yml once a pull request's test-bot run has finished green, so a
+# version bump PR ends with bottles on main without anyone clicking anything.
+# Only pull requests from this repository — never from forks.
+name: auto publish bottles
+
+on:
+  workflow_run:
+    workflows: [ "brew test-bot" ]
+    types: [ completed ]
+
+permissions: {}
+
+jobs:
+  dispatch:
+    if: >-
+      github.event.workflow_run.event == 'pull_request' &&
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+      pull-requests: read
+    steps:
+      - name: Dispatch brew pr-pull
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
+          HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+        run: |
+          set -euo pipefail
+          pr="$(gh pr list -R "$REPO" --state open --head "$HEAD_BRANCH" --json number,headRefOid \
+                --jq ".[] | select(.headRefOid == \"$HEAD_SHA\") | .number")"
+          if [[ -z "$pr" ]]; then
+            echo "No open pull request at $HEAD_SHA — the branch moved on or the PR closed. Nothing to publish."
+            exit 0
+          fi
+          if ! gh pr diff "$pr" -R "$REPO" --name-only | grep -q '^Formula/'; then
+            echo "#$pr does not touch Formula/ — no bottles to publish."
+            exit 0
+          fi
+          gh workflow run publish.yml -R "$REPO" -f pull_request="$pr" -f head_sha="$HEAD_SHA"
+          echo "Dispatched brew pr-pull for #$pr at $HEAD_SHA"
