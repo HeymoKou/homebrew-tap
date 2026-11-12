@@ -7,6 +7,8 @@ class Cbar < Formula
 
   depends_on :macos
 
+  # Bottles are built by .github/workflows/tests.yml on macos-15 and published by
+  # publish.yml. Macs without a matching bottle (older macOS, Intel) build from source.
   def install
     # build.sh is the one place that builds the bundle and writes its version, so
     # the formula runs it rather than keeping a second copy of the plist here —
