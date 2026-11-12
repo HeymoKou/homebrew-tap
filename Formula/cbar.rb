@@ -5,6 +5,12 @@ class Cbar < Formula
   sha256 "3458653dc4da8cf32ebf6c3532184b760ffb2fc426253563acbd0db583698ba1"
   license "MIT"
 
+  bottle do
+    root_url "https://github.com/HeymoKou/homebrew-tap/releases/download/cbar-0.2.21"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, arm64_sequoia: "3dee115c131dc69020a82afac7197e333891f9357147c5721000773f022725e7"
+  end
+
   depends_on :macos
 
   # Bottles are built by .github/workflows/tests.yml on macos-15 and published by
