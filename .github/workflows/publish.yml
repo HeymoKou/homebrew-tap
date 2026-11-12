@@ -72,4 +72,4 @@ jobs:
       # bottle here instead: the last step proves what users will pour.
       - name: Bottle on main can be fetched
         # --bottle-tag: this job runs on Linux and the bottle is macOS-only.
-        run: brew fetch --force-bottle --bottle-tag=arm64_sequoia --formula heymokou/tap/cbar
+        run: brew fetch --bottle-tag=arm64_sequoia --formula heymokou/tap/cbar
